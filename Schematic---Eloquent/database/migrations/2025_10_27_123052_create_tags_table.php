@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-Schema::create('tags', function (Blueprint $table) {
-    $table->id();
-    $table->string('name')->unique();
-    $table->string('slug')->unique();
-    $table->timestamps();
+Schema::create('article_tag', function (Blueprint $table) {
+    $table->foreignId('article_id')->constrained()->cascadeOnDelete();
+    $table->foreignId('tag_id')->constrained()->cascadeOnDelete();
+    $table->primary(['article_id', 'tag_id']); // Composite PK to avoid duplicates
 });
-
     }
 
     /**
@@ -25,6 +23,6 @@ Schema::create('tags', function (Blueprint $table) {
      */
     public function down(): void
     {
-        Schema::dropIfExists('tags');
+        Schema::dropIfExists('article_tag');
     }
 };

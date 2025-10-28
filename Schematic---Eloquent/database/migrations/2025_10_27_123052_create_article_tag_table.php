@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-Schema::create('article_tag', function (Blueprint $table) {
-    $table->foreignId('article_id')->constrained()->cascadeOnDelete();
-    $table->foreignId('tag_id')->constrained()->cascadeOnDelete();
-    $table->primary(['article_id', 'tag_id']); // évite les doublons
-});
-
+        Schema::create('tags', function (Blueprint $table) {
+            $table->id(); // PK
+            $table->string('name')->unique(); // Tag name (e.g., "Laravel")
+            $table->string('slug')->unique(); // URL-friendly slug (e.g., "laravel")
+            $table->timestamps(); // created_at, updated_at
+        });
     }
 
     /**
@@ -24,6 +24,6 @@ Schema::create('article_tag', function (Blueprint $table) {
      */
     public function down(): void
     {
-        Schema::dropIfExists('article_tag');
+        Schema::dropIfExists('tags');
     }
 };
